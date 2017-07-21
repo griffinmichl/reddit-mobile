@@ -1,3 +1,5 @@
+import React from 'react';
+
 function deferUntilMount(Comp) {
   return class DeferredRenderer extends React.Component {
     constructor(props) {
