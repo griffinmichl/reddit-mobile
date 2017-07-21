@@ -1,7 +1,7 @@
 const ONE_HOUR_IN_MS = 1000 * 60 * 60;
 const FRONTPAGE_WHITELIST_STATUS = 'all_ads';
 
-const createBannerProperties = (placement, user, subreddit, theme, compact, url = '') => {
+const createBannerProperties = (placement, user, subreddit, theme, compact) => {
   const properties = {};
   let age;
 
@@ -23,7 +23,7 @@ const createBannerProperties = (placement, user, subreddit, theme, compact, url 
   // use both `percentage` and `random_number` for backwards compatibility
   properties.percentage = properties.random_number = Math.floor(Math.random() * 100);
   properties.placement = placement;
-  properties.full_url = window.location && window.location.href;
+  properties.full_url = window && window.location && window.location.href;
 
   properties.nsfw = subreddit && subreddit.over18;
 
@@ -40,6 +40,6 @@ const createBannerProperties = (placement, user, subreddit, theme, compact, url 
   properties.compact = compact;
 
   return properties;
-}
+};
 
 export default createBannerProperties;

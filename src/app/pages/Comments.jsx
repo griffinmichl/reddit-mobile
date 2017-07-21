@@ -39,7 +39,6 @@ function CommentsPage(props) {
     onSortChange,
     onToggleReply,
     spoilersEnabled,
-    subredditName,
   } = props;
 
   if (!postLoaded) {
@@ -133,9 +132,8 @@ const stateProps = createSelector(
   state => state.platform.currentPage,
   state => state.preferences,
   crawlerRequestSelector,
-  state => getSubreddit(state),
   (commentsPageId, post, isReplying, spoilersEnabled, currentPage,
-   preferences, isCrawlerRequest, subredditName) => {
+   preferences, isCrawlerRequest) => {
     const postLoaded = !!post;
 
     return {
@@ -147,7 +145,6 @@ const stateProps = createSelector(
       isCrawlerRequest,
       postLoaded,
       spoilersEnabled,
-      subredditName,
     };
   },
 );

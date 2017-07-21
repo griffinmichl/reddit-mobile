@@ -1,5 +1,3 @@
-import throttle from 'lodash/throttle';
-
 import config from 'config';
 import isFakeSubreddit from 'lib/isFakeSubreddit';
 
@@ -55,7 +53,7 @@ export const defineSlot = (element, {
       googletag.display(id);
       googletag.pubads().refresh([adSlot]);
 
-      resolve(adSlot)
+      resolve(adSlot);
     });
   });
 };
@@ -80,9 +78,9 @@ export const setupGoogleTag = () => {
   const gads = document.createElement('script');
   gads.async = true;
   gads.type = 'text/javascript';
-  const useSSL = 'https:' == document.location.protocol;
-  gads.src = (useSSL ? 'https:' : 'http:') +
-    '//www.googletagservices.com/tag/js/gpt.js';
+  const useSSL = document.location.protocol === 'https:';
+  gads.src = `${useSSL ? 'https:' : 'http:' 
+    }//www.googletagservices.com/tag/js/gpt.js`;
   const node = document.getElementsByTagName('script')[0];
   node.parentNode.insertBefore(gads, node);
 
@@ -90,4 +88,4 @@ export const setupGoogleTag = () => {
     googletag.pubads().disableInitialLoad();
     googletag.enableServices();
   });
-}
+};

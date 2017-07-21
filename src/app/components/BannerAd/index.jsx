@@ -3,21 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import classNames from 'lib/classNames';
 import getSubreddit from 'lib/getSubredditFromState';
-import get from 'lodash/get';
-
-import { State } from 'app/reducers';
-// import deferUntilMount from 'higherOrderComponents/deferUntilMount';
-// import addQueryParams from 'lib/addQueryParams';
-/*
-import {
-  AD_SIZE_300_250,
-  AdPlacement,
-  BannerAdSizes,
-} from 'lib/constants';
-*/
 import createBannerProperties from 'lib/createBannerProperties';
 import { defineSlot, destroySlot, getSlotId } from 'lib/dfp';
-import isFakeSubreddit from 'lib/isFakeSubreddit';
 import './style.less';
 
 function deferUntilMount(Comp) {
@@ -37,7 +24,7 @@ function deferUntilMount(Comp) {
         return null;
       }
 
-      return <Comp {...this.props} />;
+      return <Comp { ...this.props } />;
     }
   };
 }
@@ -69,7 +56,7 @@ class BannerAd extends React.Component {
       properties,
       shouldCollapse,
       sizes,
-    }).then(adSlot => this.adSlot = adSlot);
+    }).then((adSlot) => { this.adSlot = adSlot; });
   }
 
   destroySlot() {
@@ -104,7 +91,7 @@ class BannerAd extends React.Component {
         className={ classNames('BannerAd', {
           'BannerAd__320x50': !this.props.sizes.includes('fluid'),
           'BannerAd__fluid': this.props.sizes.includes('fluid'),
-        })}
+        }) }
       >
         <div ref={ ref => { this.frame = ref; } } id={ id }></div>
       </div>
@@ -125,18 +112,12 @@ const selector = createStructuredSelector({
       return {};
     }
 
-    const origin = `${state.meta.protocol}://${state.meta.domain}`;
     return createBannerProperties(
       ownProps.placement,
       state.user,
       subredditSelector(state, ownProps),
       state.theme,
       state.compact,
-      //   1. location.href doesn't exist on the server, which will cause this
-      //      to break in the case of server side rendering.
-      //   2. if there are hash params in the url, we'll end up with an iframe
-      //      url with more than one hash
-      // addQueryParams(`${origin}${currentPage.url}`, currentPage.queryParams),
     );
   },
   slot: (state, ownProps) => {

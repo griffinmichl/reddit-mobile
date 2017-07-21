@@ -86,6 +86,7 @@ const renderPostsList = props => {
     return <Post { ...postProps } />;
   });
 
+  // eslint-disable-next-line eqeqeq
   if (!ad && shouldAdFallback && dfpAdLocation != null) {
     injectDfp(postsList, dfpAdLocation);
   }
@@ -108,7 +109,7 @@ const injectDfp = (postsList = [], dfpAdLocation) => {
       listingName='listing'
     />,
   );
-}
+};
 
 const recordsWithAd = (postRecords, ad) => {
   const adLocation = adLocationForPostRecords(postRecords);
