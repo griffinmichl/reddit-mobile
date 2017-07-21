@@ -14,16 +14,6 @@ export const getSlotId = (listingName, subredditName) => {
 
   parts.push(listingName);
 
-  // We don't care about distinguishing the index route
-  // from the other listings.
-  /*
-  if (routeName === ROUTE_NAMES.INDEX) {
-    parts.push(ROUTE_NAMES.LISTING);
-  } else if (routeName) {
-    parts.push(routeName);
-  }
-  */
-
   return parts.join('/');
 };
 
@@ -79,7 +69,7 @@ export const setupGoogleTag = () => {
   gads.async = true;
   gads.type = 'text/javascript';
   const useSSL = document.location.protocol === 'https:';
-  gads.src = `${useSSL ? 'https:' : 'http:' 
+  gads.src = `${useSSL ? 'https:' : 'http:'
     }//www.googletagservices.com/tag/js/gpt.js`;
   const node = document.getElementsByTagName('script')[0];
   node.parentNode.insertBefore(gads, node);

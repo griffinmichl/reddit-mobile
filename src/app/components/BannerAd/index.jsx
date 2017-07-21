@@ -1,34 +1,12 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import classNames from 'lib/classNames';
 import getSubreddit from 'lib/getSubredditFromState';
 import createBannerProperties from 'lib/createBannerProperties';
 import { defineSlot, destroySlot, getSlotId } from 'lib/dfp';
+import deferUntilMount from 'lib/deferUntilMount';
 import './style.less';
-
-function deferUntilMount(Comp) {
-  return class DeferredRenderer extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = { mounted: false };
-    }
-
-    componentDidMount() {
-      this.setState({ mounted: true });
-    }
-
-    render() {
-      if (!this.state.mounted) {
-        return null;
-      }
-
-      return <Comp { ...this.props } />;
-    }
-  };
-}
-
 
 
 class BannerAd extends React.Component {
@@ -99,8 +77,15 @@ class BannerAd extends React.Component {
   }
 }
 
+BannerAd.propTypes = {
+  id: T.string,
+  properties: T.object,
+  shouldCollapse: T.bool,
+  sizes: T.array,
+  slot: T.string,
+};
+
 const subredditSelector = (state) => {
-  // const subredditName = isFakeSubreddit(listingName) ? '' : listingName.toLowerCase();
   const subredditName = getSubreddit(state) || '';
   return state.subreddits[subredditName.toLowerCase()];
 };
