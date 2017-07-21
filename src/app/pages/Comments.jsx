@@ -18,6 +18,7 @@ import LoadingXpromo from 'app/components/LoadingXpromo';
 import RecommendedPosts from 'app/components/RecommendedPosts';
 import RecommendedSubreddits from 'app/components/RecommendedSubreddits';
 import SubNav from 'app/components/SubNav';
+import BannerAd from 'app/components/BannerAd';
 import getSubreddit from 'lib/getSubredditFromState';
 
 import CommentsPageHandler from 'app/router/handlers/CommentsPage';
@@ -38,6 +39,7 @@ function CommentsPage(props) {
     onSortChange,
     onToggleReply,
     spoilersEnabled,
+    subredditName,
   } = props;
 
   if (!postLoaded) {
@@ -56,6 +58,11 @@ function CommentsPage(props) {
         single={ true }
         subredditShowSpoilers={ spoilersEnabled }
         key='post'
+      />
+      <BannerAd
+        id='comments-banner'
+        shouldCollapse
+        listingName='comments'
       />
       <RecommendedPosts
         postId={ pageParams.id }
@@ -126,8 +133,9 @@ const stateProps = createSelector(
   state => state.platform.currentPage,
   state => state.preferences,
   crawlerRequestSelector,
+  state => getSubreddit(state),
   (commentsPageId, post, isReplying, spoilersEnabled, currentPage,
-   preferences, isCrawlerRequest) => {
+   preferences, isCrawlerRequest, subredditName) => {
     const postLoaded = !!post;
 
     return {
@@ -139,6 +147,7 @@ const stateProps = createSelector(
       isCrawlerRequest,
       postLoaded,
       spoilersEnabled,
+      subredditName,
     };
   },
 );

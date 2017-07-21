@@ -20,6 +20,7 @@ export default function(state=DEFAULT, action={}) {
           ad: undefined,
           impressionTracked: false,
           failed: false,
+          fallback: false,
         },
       });
     }
@@ -39,6 +40,16 @@ export default function(state=DEFAULT, action={}) {
       return merge(state, {
         [adId]: {
           pending: false,
+        },
+      });
+    }
+
+    case adActions.FALLBACK_AD: {
+      const { adId } = action;
+      return merge(state, {
+        [adId]: {
+          pending: false,
+          fallback: true,
         },
       });
     }

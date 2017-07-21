@@ -108,7 +108,7 @@ export default config => {
   server.use(router.allowedMethods());
 
   return () => {
-    server.listen(port, () => {
+    server.listen(port, '0.0.0.0', () => {
       console.log(`App launching on port ${port}`);
     });
   };
