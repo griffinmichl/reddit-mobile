@@ -31,6 +31,7 @@ export default function(state=DEFAULT, action={}) {
         [adId]: {
           pending: false,
           ad: model.toRecord(),
+          fallback: model && model.isBlankAd,
         },
       });
     }
