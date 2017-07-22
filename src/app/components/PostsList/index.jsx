@@ -2,6 +2,7 @@ import './styles.less';
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import get from 'lodash/get';
 
 import Ad from 'app/components/Ad';
 import BannerAd from 'app/components/BannerAd';
@@ -66,6 +67,7 @@ const renderPostsList = props => {
     onPostClick,
     isXPromoEnabled,
     dfpAdLocation,
+    isEmployee,
   } = props;
   const records = ad ? recordsWithAd(postRecords, ad) : postRecords;
   const postsList = records.map((postRecord, index) => {
@@ -87,7 +89,7 @@ const renderPostsList = props => {
   });
 
   // eslint-disable-next-line eqeqeq
-  if (!ad && shouldAdFallback && dfpAdLocation != null) {
+  if (isEmployee && !ad && shouldAdFallback && dfpAdLocation != null) {
     injectDfp(postsList, dfpAdLocation);
   }
 
@@ -142,7 +144,8 @@ const selector = createSelector(
   (_, props) => props.nextUrl,
   (_, props) => props.prevUrl,
   isXPromoInFeedEnabled,
-  (postsList, posts, adRequest, nextUrl, prevUrl, isXPromoEnabled) => ({
+  state => get(state, 'accounts.me.isEmployee'),
+  (postsList, posts, adRequest, nextUrl, prevUrl, isXPromoEnabled, isEmployee) => ({
     loading: !!postsList && postsList.loading,
     postRecords: postsList ? postsList.results.filter(p => !posts[p.uuid].hidden) : [],
     dfpAdLocation: !!postsList && dfpAdLocationFromPosts(postsList.results.map(result => posts[result.uuid])),
@@ -152,6 +155,7 @@ const selector = createSelector(
     prevUrl,
     nextUrl,
     isXPromoEnabled,
+    isEmployee,
   }),
 );
 
