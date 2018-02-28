@@ -1,7 +1,7 @@
 import * as compactActions from 'app/actions/compact';
 import * as loginActions from 'app/actions/login';
 
-export const DEFAULT = true;
+export const DEFAULT = false;
 
 export default (state=DEFAULT, action={}) => {
   switch (action.type) {
